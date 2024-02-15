@@ -1,0 +1,25 @@
+
+<html>
+<body>
+  <form action="{% url 'search' %}" method="get" >
+    {% csrf_token %}
+    <input type="text" name="q" />
+    <button type="submit" >Search</button>
+  </form>
+<h1>{{ status }} Tickets</h1>
+<ul>
+  {% for ticket in tickets %}
+    <li><a href="detail/{{ticket.id}}/">{{ ticket.description }}</a></li>
+    {% if status == "Open" %}
+    <a href="edit/{{ticket.id}}"><button>Edit Ticket</button></a> 
+    {% endif %}
+  {% endfor %}
+</ul>
+{% if status == "Open" %}
+<a href="add/"><button>Create Ticket</button></a>
+<a href="closed/"><button>Display Closed Tickets</button></a>
+{% else %}
+<a href="/"><button>Display Open Tickets</button></a>
+{% endif %}
+</body>
+</html>

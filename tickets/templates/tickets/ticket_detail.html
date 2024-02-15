@@ -1,0 +1,13 @@
+
+<html>
+    {% load static %}
+    {% csrf_token %}
+        <h1>{{ ticket.name }}'s Ticket</h1>
+        <p><strong>Phone:</strong> {{ ticket.phone }}</p>
+        <h2>Notes:</h2>
+        <ul>
+            {% for note in ticket.notes.all %}
+                <li>{{ note.text }}</li>
+            {% endfor %}
+        </ul>
+</html>

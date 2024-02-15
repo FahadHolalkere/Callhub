@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Ticket</title>
+</head>
+<body>
+
+<h1>Edit Ticket</h1>
+
+<form action="{% url 'update_ticket' ticket.id %}" method="post">
+    {% csrf_token %}
+    
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" value="{{ ticket.name }}" required><br>
+    
+    <label for="phone">Phone:</label>
+    <input type="text" id="phone" name="phone" value="{{ ticket.phone }}" required><br>
+    
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" value="{{ ticket.email }}" required><br>
+    
+    <label for="city">City:</label>
+    <input type="text" id="city" name="city" value="{{ ticket.city }}" required><br>
+    
+    <label for="state">State:</label>
+    <input type="text" id="state" name="state" value="{{ ticket.state }}" required><br>
+    
+    <label for="description">Description:</label><br>
+    <textarea id="description" name="description" rows="4" required>{{ ticket.description }}</textarea><br>
+    
+    <label for="category">Category:</label>
+    <select id="category" name="category" required>
+        <option value="Technical" {% if ticket.category == 'Technical' %}selected{% endif %}>Technical</option>
+        <option value="Billing" {% if ticket.category == 'Billing' %}selected{% endif %}>Billing</option>
+        <option value="Service" {% if ticket.category == 'Service' %}selected{% endif %}>Service</option>
+    </select><br>
+    
+    <label for="state">Status:</label>
+    <select id="status" name="status" required>
+        <option value="Open" {% if ticket.status == 'Open' %}selected{% endif %}>Open</option>
+        <option value="Closed" {% if ticket.status == 'Closed' %}selected{% endif %}>Closed</option>
+    </select><br>
+
+    <label for="notes">Notes:</label><br>
+        {% for note in ticket.notes.all %}
+            <textarea rows="2">{{ note.text }}</textarea>
+            <p>{{ ticket.last_modified_date }}</p>
+        {% endfor %}
+    <textarea id="notes" name="notes" rows="4">Add new Note</textarea>
+    <input type="submit" value="Update Ticket">
+</form>
+
+
+
+</body>
+</html>
